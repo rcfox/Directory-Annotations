@@ -33,10 +33,11 @@ if (!@directories)
 foreach(@directories)
 {
     # Correct any spaces in filenames.
-    s/ /\\ /;
+    my $fixed_dir = $_;
+    $fixed_dir =~ s/ /\\ /;
 
     # Call ls on each directory separately so that we can output the .ls file beside it.
-    if (system("ls $_ $ls_arguments") == 0)
+    if (system("ls $fixed_dir $ls_arguments") == 0)
     {
         # Open the .ls file, if it exists. Otherwise, go on to the next directory.
         open(my $file, '<', "$_/.ls") or next;
